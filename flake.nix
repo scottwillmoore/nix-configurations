@@ -21,7 +21,15 @@
       userName,
     }: let
       homeConfiguration = home-manager.lib.homeManagerConfiguration;
-      packages = home-packages.legacyPackages.${hostPlatform};
+
+      packages = import home-packages {
+        # https://nixos.org/manual/nixpkgs/unstable/#sec-config-options-reference
+        # https://ryantm.github.io/nixpkgs/using/configuration/
+        config.allowUnfree = true;
+
+        # https://nixos.org/guides/nix-pills/nixpkgs-parameters.html#idm140737319695184
+        system = hostPlatform;
+      };
     in
       homeConfiguration {
         extraSpecialArgs = {

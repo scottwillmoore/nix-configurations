@@ -3,39 +3,14 @@
   settings,
   ...
 }: {
-  # TODO: Consider allowUnfreePredicate instead.
-  nixpkgs.config.allowUnfree = true;
-
   home = {
     homeDirectory = "/home/${settings.userName}";
     packages = with packages; [
-      # TODO: Organize this list.
-      # TODO: Use Home Mananger modules (enable = true).
-
-      alejandra
-
-      # https://wiki.archlinux.org/title/Core_utilities#Alternatives
-      # https://github.com/ibraheemdev/modern-unix
-      # https://news.ycombinator.com/item?id=26559334
-      bat
-      bottom
-      delta
-      du-dust
-      exa
-      fd
-      fzf
-      hyperfine
-      jq
-      ripgrep
-      tealdeer
-
-      # Core utilities
-      # https://wiki.archlinux.org/title/Core_utilities
       # https://wiki.archlinux.org/title/Archiving_and_compression
+      # https://wiki.archlinux.org/title/Core_utilities
       # https://wiki.archlinux.org/title/Network_tools
       bzip2
       coreutils
-      curl
       curl
       diffutils
       dig
@@ -49,17 +24,33 @@
       iputils
       less
       netcat
-      # TODO: Enable allowUnfree.
-      # rar
+      p7zip
+      rar
       time
       traceroute
-      # TODO: Enable allowUnfree.
-      # unrar
       unzip
-      wget
       wget
       xz
       zip
+
+      # https://github.com/ibraheemdev/modern-unix
+      # https://news.ycombinator.com/item?id=26559334
+      # https://wiki.archlinux.org/title/Core_utilities#Alternatives
+      bat
+      bottom
+      delta
+      du-dust
+      exa
+      fd
+      fzf
+      hyperfine
+      jq
+      ripgrep
+      tealdeer
+
+      # https://github.com/nix-community/awesome-nix
+      alejandra
+      nil
     ];
     stateVersion = "22.11";
     username = settings.userName;
