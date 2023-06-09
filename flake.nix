@@ -1,18 +1,52 @@
 {
-  description = "Scott's Nix configuration";
-
   inputs = {
-    home-manager.url = "github:nix-community/home-manager";
+    nixos-packages.url = "github:nixos/nixpkgs/nixos-23.05";
+
+    nixos-wsl.url = "github:nix-community/nixos-wsl";
+
+    nixos-wsl.inputs.nixpkgs.follows = "nixos-packages";
+
     home-packages.url = "github:nixos/nixpkgs/nixpkgs-unstable";
+
+    home-manager.url = "github:nix-community/home-manager";
 
     home-manager.inputs.nixpkgs.follows = "home-packages";
   };
 
   outputs = inputs @ {
-    home-manager,
+    nixos-packages,
     home-packages,
+    home-manager,
     ...
   }: let
+    mkNixosConfiguration = {
+      hostName,
+      hostPlatform,
+      nixosModule,
+      userName,
+    }: let
+      nixosConfiguration = nixos-packages.lib.nixosSystem;
+      packages = import nixos-packages {
+        config.allowUnfree = true;
+        system = hostPlatform;
+      };
+    in
+      nixosConfiguration {
+        modules = [
+          nixosModule
+        ];
+        pkgs = packages;
+        specialArgs = {
+          inherit inputs;
+          inherit packages;
+          settings = {
+            inherit hostName;
+            inherit hostPlatform;
+            inherit userName;
+          };
+        };
+      };
+
     mkHomeConfiguration = {
       emailAddress,
       fullName,
@@ -21,13 +55,8 @@
       userName,
     }: let
       homeConfiguration = home-manager.lib.homeManagerConfiguration;
-
       packages = import home-packages {
-        # https://nixos.org/manual/nixpkgs/unstable/#sec-config-options-reference
-        # https://ryantm.github.io/nixpkgs/using/configuration/
         config.allowUnfree = true;
-
-        # https://nixos.org/guides/nix-pills/nixpkgs-parameters.html#idm140737319695184
         system = hostPlatform;
       };
     in
@@ -42,15 +71,26 @@
             inherit userName;
           };
         };
-        modules = [homeModule];
+        modules = [
+          homeModule
+        ];
         pkgs = packages;
       };
   in {
+    nixosConfigurations = {
+      "scott-desktop" = mkNixosConfiguration {
+        hostName = "scott-desktop";
+        hostPlatform = "x86_64-linux";
+        nixosModule = ./hosts/scott-desktop;
+        userName = "scott";
+      };
+    };
+
     homeConfigurations = {
       "scott@scott-desktop" = mkHomeConfiguration {
         emailAddress = "me@scottwillmoore.au";
         fullName = "Scott Moore";
-        homeModule = ./home.nix;
+        homeModule = ./users/scott;
         hostPlatform = "x86_64-linux";
         userName = "scott";
       };
