@@ -1,32 +1,28 @@
 {
   inputs = {
     nixos-packages.url = "github:nixos/nixpkgs/nixos-23.05";
+    unstable-packages.url = "github:nixos/nixpkgs/nixpkgs-unstable";
 
-    nixos-wsl.url = "github:nix-community/nixos-wsl";
-
-    nixos-wsl.inputs.nixpkgs.follows = "nixos-packages";
-
-    home-packages.url = "github:nixos/nixpkgs/nixpkgs-unstable";
-
+    flake-utilities.url = "github:numtide/flake-utils";
     home-manager.url = "github:nix-community/home-manager";
+    vscode-server.url = "github:nix-community/nixos-vscode-server";
+    wsl.url = "github:nix-community/nixos-wsl";
 
-    home-manager.inputs.nixpkgs.follows = "home-packages";
+    home-manager.inputs.nixpkgs.follows = "unstable-packages";
+    wsl.inputs.flake-utils.follows = "flake-utilities";
+    wsl.inputs.nixpkgs.follows = "nixos-packages";
   };
 
-  outputs = inputs @ {
-    nixos-packages,
-    home-packages,
-    home-manager,
-    ...
-  }: let
+  outputs = inputs: let
     mkNixosConfiguration = {
       hostName,
       hostPlatform,
       nixosModule,
       userName,
     }: let
-      nixosConfiguration = nixos-packages.lib.nixosSystem;
-      packages = import nixos-packages {
+      nixosConfiguration = inputs.nixos-packages.lib.nixosSystem;
+
+      packages = import inputs.nixos-packages {
         config.allowUnfree = true;
         system = hostPlatform;
       };
@@ -54,8 +50,9 @@
       hostPlatform,
       userName,
     }: let
-      homeConfiguration = home-manager.lib.homeManagerConfiguration;
-      packages = import home-packages {
+      homeConfiguration = inputs.home-manager.lib.homeManagerConfiguration;
+
+      packages = import inputs.unstable-packages {
         config.allowUnfree = true;
         system = hostPlatform;
       };

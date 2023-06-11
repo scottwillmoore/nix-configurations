@@ -5,7 +5,7 @@
   ...
 }: {
   imports = [
-    inputs.nixos-wsl.nixosModules.wsl
+    inputs.wsl.nixosModules.default
   ];
 
   console.enable = false;

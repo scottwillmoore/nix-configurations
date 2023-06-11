@@ -1,4 +1,4 @@
-{...}: {
+{lib, ...}: {
   programs.starship.enable = true;
 
   programs.starship = {
@@ -8,18 +8,18 @@
 
       # scott-desktop as scott in ~ on main at 3cae0f8d
       # ^^^^^^^^^^^^^    ^^^^^    ^    ^^^^    ^^^^^^^^
-      # format = lib.concatStrings [
-      #   "($hostname (\\($localip\\) )as )"
-      #   "($username in )"
-      #   "$directory"
-      #   "( \\($container$nix_shell\\))"
-      #   "( on $git_branch)( at $git_commit)( \\($git_status\\))( \\[$git_state\\])"
-      #   "( with $package)"
-      #   "( \\($nodejs$rust\\))"
-      #   "( took $cmd_duration)"
-      #   "$line_break"
-      #   "(\\($jobs\\) )$character"
-      # ];
+      format = lib.concatStrings [
+        "($hostname (\\($localip\\) )as )"
+        "($username in )"
+        "$directory"
+        "( \\($container$nix_shell\\))"
+        "( on $git_branch)( at $git_commit)( \\($git_status\\))( \\[$git_state\\])"
+        "( with $package)"
+        "( \\($nodejs$rust\\))"
+        "( took $cmd_duration)"
+        "$line_break"
+        "(\\($jobs\\) )$character"
+      ];
 
       hostname = {
         format = "[$hostname]($style)";

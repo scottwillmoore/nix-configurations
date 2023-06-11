@@ -1,4 +1,8 @@
-{settings, ...}: {
+{
+  inputs,
+  settings,
+  ...
+}: {
   # https://nix-community.github.io/home-manager/options.html#opt-home.stateVersion
   home.stateVersion = "23.05";
 
@@ -10,6 +14,8 @@
   home.shellAliases."sudo" = "sudo";
 
   imports = [
+    inputs.vscode-server.homeModules.default
+
     ./packages.nix
 
     ./programs/bash.nix
@@ -17,7 +23,7 @@
     ./programs/gpg.nix
     ./programs/neovim.nix
     ./programs/readline.nix
-    # ./programs/starship.nix
+    ./programs/starship.nix
   ];
 
   programs.command-not-found.enable = true;
@@ -28,4 +34,6 @@
   programs.ssh.enable = true;
   programs.starship.enable = true;
   programs.tmux.enable = true;
+
+  services.vscode-server.enable = true;
 }
