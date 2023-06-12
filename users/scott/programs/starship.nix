@@ -10,13 +10,18 @@
       # ^^^^^^^^^^^^^    ^^^^^    ^    ^^^^    ^^^^^^^^
 
       format = lib.concatStrings [
-        "($hostname (\\($localip\\) )as )"
+        # scott-desktop as
+        "($hostname as )"
+        # scott in
         "($username in )"
-        "$directory"
-        "( \\($container$nix_shell\\))"
+        # ...configuration (container NAME) (guix) (nix NAME)
+        "$directory( \\($container\\))( \\($guix_shell\\))( \\($nix_shell\\))"
+        # "$directory(, $container)(, $guix)(, $nix_shell)"
+        # on main (+)
         "( on $git_branch)( at $git_commit)( \\($git_status\\))( \\[$git_state\\])"
-        "( with $package)"
-        "( \\($nodejs$rust\\))"
+        # at v0.0.0 (node v20.0.0) (rust v1.70.0)
+        "( at $package)( \\($nodejs\\))( \\($rust\\))"
+        # "( at $package)(, $nodejs)(, $rust)"
         "( took $cmd_duration)"
         "$line_break"
         "(\\($jobs\\) )$character"
@@ -24,33 +29,14 @@
 
       hostname = {
         format = "[$hostname]($style)";
-        ssh_only = false;
         style = "bold bright-purple";
         trim_at = ".";
-      };
-
-      localip = {
-        disabled = false;
-        format = "[$localipv4]($style)";
-        style = "bright-purple";
       };
 
       username = {
         format = "[$user]($style)";
         show_always = true;
         style_user = "bold bright-blue";
-      };
-
-      container = {
-        format = "[$symbol $name]($style)";
-        style = "bright-cyan";
-        symbol = "container";
-      };
-
-      nix_shell = {
-        format = "[$symbol $name]($style)";
-        style = "bright-cyan";
-        symbol = "nix";
       };
 
       directory = {
@@ -60,6 +46,24 @@
         repo_root_format = "[$before_root_path]($before_repo_root_style)[$repo_root]($repo_root_style)[$path]($style)[$read_only]($read_only_style)";
         style = "bold bright-cyan";
         truncation_symbol = "...";
+      };
+
+      container = {
+        format = "[$symbol( $name)]($style)";
+        style = "bright-cyan";
+        symbol = "container";
+      };
+
+      guix_shell = {
+        format = "[$symbol]($style)";
+        style = "bright-cyan";
+        symbol = "guix";
+      };
+
+      nix_shell = {
+        format = "[$symbol( $name)]($style)";
+        style = "bright-cyan";
+        symbol = "nix";
       };
 
       git_branch = {
@@ -98,7 +102,6 @@
 
       nodejs = {
         format = "[$symbol( $version)]($style)";
-        not_capable_style = "bright-red";
         style = "bright-yellow";
         symbol = "node";
       };
