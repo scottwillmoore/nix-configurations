@@ -1,39 +1,21 @@
-{
-  inputs,
-  settings,
-  ...
-}: {
-  # https://nix-community.github.io/home-manager/options.html#opt-home.stateVersion
-  home.stateVersion = "23.05";
-
-  # https://nix-community.github.io/home-manager/index.html#sec-usage-configuration
-  home.homeDirectory = "/home/${settings.userName}";
-  home.username = settings.userName;
-
-  home.shellAliases."ls" = "exa";
-  home.shellAliases."sudo" = "sudo";
-
+{inputs, ...}: let
+  userName = "scott";
+in {
   imports = [
     inputs.vscode-server.homeModules.default
 
     ./packages.nix
-
-    ./programs/bash.nix
-    ./programs/git.nix
-    ./programs/gpg.nix
-    ./programs/neovim.nix
-    ./programs/readline.nix
-    ./programs/starship.nix
+    ./programs.nix
+    ./services.nix
   ];
 
-  programs.command-not-found.enable = true;
-  programs.direnv.enable = true;
-  programs.direnv.nix-direnv.enable = true;
-  programs.home-manager.enable = true;
-  programs.man.enable = true;
-  programs.ssh.enable = true;
-  programs.starship.enable = true;
-  programs.tmux.enable = true;
+  # https://nix-community.github.io/home-manager/options.html#opt-home.stateVersion
+  # https://nixos.wiki/wiki/FAQ/When_do_I_update_stateVersion
+  home.stateVersion = "23.05";
 
-  services.vscode-server.enable = true;
+  home.homeDirectory = "/home/${userName}";
+  home.username = "${userName}";
+
+  # Restart services on switch.
+  systemd.user.startServices = "sd-switch";
 }

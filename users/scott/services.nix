@@ -1,9 +1,9 @@
 {...}: {
-  programs.gpg.enable = true;
-
-  services.gpg-agent.enable = true;
+  services.vscode-server.enable = true;
 
   services.gpg-agent = {
+    enable = true;
+
     defaultCacheTtl = 5 * 60;
     defaultCacheTtlSsh = 5 * 60;
     enableSshSupport = true;

@@ -1,13 +1,14 @@
 {lib, ...}: {
-  programs.starship.enable = true;
-
   programs.starship = {
+    enable = true;
+
     settings = {
       add_newline = false;
       command_timeout = 200;
 
       # scott-desktop as scott in ~ on main at 3cae0f8d
       # ^^^^^^^^^^^^^    ^^^^^    ^    ^^^^    ^^^^^^^^
+
       format = lib.concatStrings [
         "($hostname (\\($localip\\) )as )"
         "($username in )"
@@ -31,7 +32,6 @@
       localip = {
         disabled = false;
         format = "[$localipv4]($style)";
-        ssh_only = false;
         style = "bright-purple";
       };
 
@@ -75,19 +75,8 @@
       };
 
       git_status = {
-        ahead = "⇡";
-        behind = "⇣";
-        conflicted = "=";
-        deleted = "-";
-        diverged = "⇕";
         format = "[$all_status$ahead_behind]($style)";
-        modified = "!";
-        renamed = "^";
-        staged = "+";
-        stashed = "~";
         style = "bright-green";
-        untracked = "?";
-        up_to_date = "";
       };
 
       git_state = {

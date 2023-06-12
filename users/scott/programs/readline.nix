@@ -4,9 +4,9 @@
   # NOTE: Use XDG Base Directories.
   # https://wiki.archlinux.org/title/XDG_Base_Directory#Support
 
-  programs.readline.enable = true;
-
   programs.readline = {
+    enable = true;
+
     includeSystemConfig = false;
 
     extraConfig = ''

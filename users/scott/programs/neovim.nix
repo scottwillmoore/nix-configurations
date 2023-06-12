@@ -1,7 +1,7 @@
 {packages, ...}: {
-  programs.neovim.enable = true;
-
   programs.neovim = {
+    enable = true;
+
     defaultEditor = true;
 
     plugins = with packages.vimPlugins; [
