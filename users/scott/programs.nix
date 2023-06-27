@@ -33,6 +33,12 @@
   programs.git = {
     enable = true;
 
+    aliases = {
+      "graph" = "log --date=human --graph --pretty='%C(bold red)%<(12,trunc)%H%C(reset) (%C(red)%D%C(reset)) at %C(bold green)%ad%C(reset) (%C(green)%ar%C(reset)) by %C(bold blue)%an%C(reset) (%C(blue)%G?%C(reset), %C(blue)%GK%C(reset))%n> %s'";
+      "latest" = "log --max-count=1 --stat";
+      "short" = "log --oneline";
+    };
+
     lfs.enable = true;
 
     extraConfig = {
