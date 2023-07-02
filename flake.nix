@@ -1,6 +1,6 @@
 {
   inputs = {
-    nixos-packages.url = "github:nixos/nixpkgs/nixos-23.05";
+    stable-packages.url = "github:nixos/nixpkgs/nixos-23.05";
     unstable-packages.url = "github:nixos/nixpkgs/nixpkgs-unstable";
 
     flake-utilities.url = "github:numtide/flake-utils";
@@ -10,7 +10,7 @@
 
     home-manager.inputs.nixpkgs.follows = "unstable-packages";
     wsl.inputs.flake-utils.follows = "flake-utilities";
-    wsl.inputs.nixpkgs.follows = "nixos-packages";
+    wsl.inputs.nixpkgs.follows = "stable-packages";
   };
 
   outputs = inputs: let
@@ -20,19 +20,22 @@
       nixosModule,
       userName,
     }: let
-      nixosConfiguration = inputs.nixos-packages.lib.nixosSystem;
+      nixosConfiguration = inputs.stable-packages.lib.nixosSystem;
 
-      packages = import inputs.nixos-packages {
+      packages = import inputs.stable-packages {
         config.allowUnfree = true;
-        system = hostPlatform;
+        localSystem = hostPlatform;
       };
+
+      functions = packages.lib;
     in
       nixosConfiguration {
-        modules = [
-          nixosModule
-        ];
+        lib = functions;
+        modules = [nixosModule];
         pkgs = packages;
+
         specialArgs = {
+          inherit functions;
           inherit inputs;
           inherit packages;
           settings = {
@@ -54,11 +57,18 @@
 
       packages = import inputs.unstable-packages {
         config.allowUnfree = true;
-        system = hostPlatform;
+        localSystem = hostPlatform;
       };
+
+      functions = packages.lib;
     in
       homeConfiguration {
+        lib = functions;
+        modules = [homeModule];
+        pkgs = packages;
+
         extraSpecialArgs = {
+          inherit functions;
           inherit inputs;
           inherit packages;
           settings = {
@@ -68,10 +78,6 @@
             inherit userName;
           };
         };
-        modules = [
-          homeModule
-        ];
-        pkgs = packages;
       };
   in {
     nixosConfigurations = {

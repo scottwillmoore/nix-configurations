@@ -66,6 +66,7 @@
     # https://github.com/nix-community/awesome-nix
     nixUtilities = [
       alejandra
+      cachix
       nil
     ];
   in

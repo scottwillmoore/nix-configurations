@@ -1,4 +1,4 @@
-{lib, ...}: {
+{functions, ...}: {
   programs.starship = {
     enable = true;
 
@@ -9,7 +9,7 @@
       # scott-desktop as scott in ~ on main at 3cae0f8d
       # ^^^^^^^^^^^^^    ^^^^^    ^    ^^^^    ^^^^^^^^
 
-      format = lib.concatStrings [
+      format = functions.concatStrings [
         # scott-desktop as
         "($hostname as )"
         # scott in
