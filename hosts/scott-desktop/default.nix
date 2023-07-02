@@ -64,10 +64,9 @@
   # TODO: Investigate using Fish as my default shell environment.
   # programs.fish.enable = true;
 
-  # TODO: Investigate using `nix-ld` to solve issues with third-party package
-  # managers such as NPM.
+  # Use `nix-ld` to run unpatched, dynamically linked binaries.
   # https://github.com/Mic92/nix-ld
-  # programs.nix-ld.enable = true;
+  programs.nix-ld.enable = true;
 
   # Use immutable users where files such as `/etc/passwd` are managed by Nix.
   users.mutableUsers = false;
