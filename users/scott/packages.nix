@@ -36,7 +36,7 @@
     # https://wiki.archlinux.org/title/Core_utilities#Alternatives
     modernUtilities = [
       # https://github.com/sharkdp/bat
-      bat # *
+      # bat # *
       # https://github.com/ClementTsang/bottom
       bottom # *
       # https://github.com/dandavison/delta

@@ -22,6 +22,12 @@
     ];
   };
 
+  programs.bat = {
+    enable = true;
+
+    config.theme = "ansi";
+  };
+
   programs.command-not-found.enable = true;
 
   programs.direnv = {
