@@ -1,16 +1,20 @@
 {
   inputs = {
-    stable-packages.url = "github:nixos/nixpkgs/nixos-23.05";
-    unstable-packages.url = "github:nixos/nixpkgs/nixpkgs-unstable";
+    # flake-parts.url = "github:hercules-ci/flake-parts";
 
-    flake-utilities.url = "github:numtide/flake-utils";
     home-manager.url = "github:nix-community/home-manager";
-    vscode-server.url = "github:nix-community/nixos-vscode-server";
-    wsl.url = "github:nix-community/nixos-wsl";
+    home-manager.inputs.nixpkgs.follows = "nix-packages";
 
-    home-manager.inputs.nixpkgs.follows = "unstable-packages";
-    wsl.inputs.flake-utils.follows = "flake-utilities";
-    wsl.inputs.nixpkgs.follows = "stable-packages";
+    nix-packages.url = "github:nixos/nixpkgs/nixpkgs-unstable";
+
+    # nix-systems.url = "github:nix-systems/default";
+
+    nixos-packages.url = "github:nixos/nixpkgs/nixos-23.05";
+
+    vscode-server.url = "github:nix-community/nixos-vscode-server";
+
+    wsl.url = "github:nix-community/nixos-wsl";
+    wsl.inputs.nixpkgs.follows = "nixos-packages";
   };
 
   outputs = inputs: let
@@ -20,22 +24,21 @@
       nixosModule,
       userName,
     }: let
-      nixosConfiguration = inputs.stable-packages.lib.nixosSystem;
+      nixosConfiguration = inputs.nixos-packages.lib.nixosSystem;
 
-      packages = import inputs.stable-packages {
+      packages = import inputs.nixos-packages {
         config.allowUnfree = true;
         localSystem = hostPlatform;
       };
 
-      functions = packages.lib;
+      utilities = packages.lib;
     in
       nixosConfiguration {
-        lib = functions;
+        lib = utilities;
         modules = [nixosModule];
         pkgs = packages;
 
         specialArgs = {
-          inherit functions;
           inherit inputs;
           inherit packages;
           settings = {
@@ -43,6 +46,7 @@
             inherit hostPlatform;
             inherit userName;
           };
+          inherit utilities;
         };
       };
 
@@ -55,20 +59,19 @@
     }: let
       homeConfiguration = inputs.home-manager.lib.homeManagerConfiguration;
 
-      packages = import inputs.unstable-packages {
+      packages = import inputs.nix-packages {
         config.allowUnfree = true;
         localSystem = hostPlatform;
       };
 
-      functions = packages.lib;
+      utilities = packages.lib;
     in
       homeConfiguration {
-        lib = functions;
+        lib = utilities;
         modules = [homeModule];
         pkgs = packages;
 
         extraSpecialArgs = {
-          inherit functions;
           inherit inputs;
           inherit packages;
           settings = {
@@ -77,6 +80,7 @@
             inherit hostPlatform;
             inherit userName;
           };
+          inherit utilities;
         };
       };
   in {

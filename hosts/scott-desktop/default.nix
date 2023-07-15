@@ -1,8 +1,8 @@
 {
-  functions,
   inputs,
   packages,
   settings,
+  utilities,
   ...
 }: {
   imports = [
@@ -39,11 +39,11 @@
   # The use of `mkForce` is required to override the default configuration.
   # https://github.com/NixOS/nixpkgs/blob/nixos-23.05/nixos/modules/services/misc/nix-daemon.nix#L814C24-L814C24
   nix.settings = {
-    substituters = functions.mkForce [
+    substituters = utilities.mkForce [
       "https://cache.nixos.org/"
       "https://nix-community.cachix.org"
     ];
-    trusted-public-keys = functions.mkForce [
+    trusted-public-keys = utilities.mkForce [
       "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
       "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
     ];
