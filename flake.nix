@@ -1,13 +1,9 @@
 {
   inputs = {
-    # flake-parts.url = "github:hercules-ci/flake-parts";
-
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nix-packages";
 
     nix-packages.url = "github:nixos/nixpkgs/nixpkgs-unstable";
-
-    # nix-systems.url = "github:nix-systems/default";
 
     nixos-packages.url = "github:nixos/nixpkgs/nixos-23.05";
 

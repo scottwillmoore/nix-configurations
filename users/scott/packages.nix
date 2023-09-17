@@ -44,7 +44,7 @@
       # https://github.com/bootandy/dust
       du-dust
       # https://github.com/ogham/exa
-      exa # *
+      eza # *
       # https://github.com/sharkdp/fd
       fd
       # https://github.com/junegunn/fzf

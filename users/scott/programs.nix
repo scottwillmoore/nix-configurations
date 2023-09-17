@@ -33,6 +33,7 @@
   programs.direnv = {
     enable = true;
 
+    config.whitelist.prefix = ["/home/${settings.userName}/repositories/scottwillmoore"];
     nix-direnv.enable = true;
   };
 
