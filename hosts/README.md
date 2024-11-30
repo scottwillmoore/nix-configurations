@@ -1,5 +1,0 @@
-# Hosts
-
-## `scott-desktop`
-
-...

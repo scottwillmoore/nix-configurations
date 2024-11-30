@@ -1,9 +1,0 @@
-# Nix Configurations
-
-## Overview
-
-...
-
-## Installation
-
-...
