@@ -1,7 +1,5 @@
 # Tasks
 
-**Push files to GitHub.** Need GnuPG for authentication and signature!
-
 - Bash
   - Readline
 - Gnome
@@ -25,7 +23,3 @@
 - Improve PAM?
 
 ...
-
-1. Get rid of `home-manager`? I don't like it... Write it in Rust?
-2. Create my own replacement of `nixpkgs`? Insane...
-3. Experiment with the Nickel language for configuration? Try again?

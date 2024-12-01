@@ -3,18 +3,20 @@
   home.stateVersion = "24.05";
 
   imports = [
+    ./bash.nix
     ./desktop.nix
     ./firefox.nix
     ./fish.nix
     ./git.nix
     ./gpg.nix
+    ./readline.nix
     ./ssh.nix
   ];
 
   home.packages = with pkgs; [
     # Applications
     firefox
-    google-chrome
+    kitty
     vscode
 
     # Utilities
@@ -36,8 +38,6 @@
   home.sessionVariables.NIXOS_OZONE_WL = "1";
 
   xdg.enable = true;
-
-  programs.bash.enable = true;
 
   programs.direnv = {
     enable = true;
