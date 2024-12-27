@@ -2,14 +2,11 @@
 {
   fonts.enableDefaultPackages = false;
   fonts.packages = [
-    pkgs.iosevka
     pkgs.inter
-    (pkgs.nerdfonts.override {
-      fonts = [
-        "Iosevka"
-        "NerdFontsSymbolsOnly"
-      ];
-    })
+    pkgs.iosevka
+    pkgs.nerd-fonts.iosevka
+    pkgs.nerd-fonts.iosevka-term
+    pkgs.nerd-fonts.symbols-only
     pkgs.noto-fonts
     pkgs.noto-fonts-color-emoji
     pkgs.roboto
