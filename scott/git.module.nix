@@ -52,13 +52,7 @@ in
       default = null;
     };
 
-    attributes = lib.mkOption {
-      description = "A global list of patterns and their associated attributes.";
-      type = types.listOf types.str;
-      default = [ ];
-    };
-
-    ignores = lib.mkOption {
+    ignore = lib.mkOption {
       description = "A global list of patterns that should be ignored.";
       type = types.listOf types.str;
       default = [ ];
@@ -79,12 +73,8 @@ in
       text = lib.generators.toGitINI git.config;
     };
 
-    home.file."${configPath}/attributes" = lib.mkIf (git.attributes != [ ]) {
-      text = lib.concatStringsSep "\n" git.attributes;
-    };
-
-    home.file."${configPath}/ignores" = lib.mkIf (git.ignores != [ ]) {
-      text = lib.concatStringsSep "\n" git.ignores;
+    home.file."${configPath}/ignore" = lib.mkIf (git.ignore != [ ]) {
+      text = lib.concatStringsSep "\n" git.ignore;
     };
   };
 }
