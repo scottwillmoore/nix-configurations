@@ -40,6 +40,7 @@ let
 in
 {
   dconf.enable = true;
+
   dconf.settings =
     let
       # There appears to be two implementations of `gvariant`...
@@ -63,6 +64,11 @@ in
           "switch-applications-backward" = g.mkArray g.type.string [ ];
           "switch-windows" = g.mkArray g.type.string [ "<Super>Tab" ];
           "switch-windows-backward" = g.mkArray g.type.string [ "<Shift><Super>Tab" ];
+        };
+        "org/gnome/desktop/background" = {
+          "picture-uri" = g.mkString "${./wallpapers/minimal-mojave-day.png}";
+          "picture-uri-dark" = g.mkString "${./wallpapers/minimal-mojave-night.png}";
+          "show-desktop-icons" = g.mkBoolean false;
         };
         "org/gnome/desktop/screensaver" = {
           "lock-enabled" = g.mkBoolean true;
