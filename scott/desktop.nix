@@ -5,22 +5,10 @@ let
     pkgs.gnomeExtensions.alphabetical-app-grid
 
     # https://extensions.gnome.org/extension/615/appindicator-support/
-    # pkgs.gnomeExtensions.appindicator
+    pkgs.gnomeExtensions.appindicator
 
     # https://extensions.gnome.org/extension/3193/blur-my-shell/
     pkgs.gnomeExtensions.blur-my-shell
-
-    # https://extensions.gnome.org/extension/307/dash-to-dock/
-    # pkgs.gnomeExtensions.dash-to-dock
-
-    # https://extensions.gnome.org/extension/1160/dash-to-panel/
-    # pkgs.gnomeExtensions.dash-to-panel
-
-    # https://extensions.gnome.org/extension/1319/gsconnect/
-    # pkgs.gnomeExtensions.gsconnect
-
-    # https://extensions.gnome.org/extension/3843/just-perfection/
-    # pkgs.gnomeExtensions.just-perfection
 
     # https://extensions.gnome.org/extension/600/launch-new-instance/
     pkgs.gnomeExtensions.launch-new-instance
@@ -28,11 +16,11 @@ let
     # https://extensions.gnome.org/extension/2236/night-theme-switcher/
     pkgs.gnomeExtensions.night-theme-switcher
 
+    # https://extensions.gnome.org/extension/5940/quick-settings-audio-panel/
+    pkgs.gnomeExtensions.quick-settings-audio-panel
+
     # https://extensions.gnome.org/extension/7048/rounded-window-corners-reborn/
     pkgs.gnomeExtensions.rounded-window-corners-reborn
-
-    # https://extensions.gnome.org/extension/2890/tray-icons-reloaded/
-    pkgs.gnomeExtensions.tray-icons-reloaded
 
     # https://extensions.gnome.org/extension/19/user-themes/
     pkgs.gnomeExtensions.user-themes
@@ -53,6 +41,9 @@ in
     recursiveUpdateList [
       # Basics
       {
+        "org/gnome/desktop/app-folders" = {
+          "folder-children" = g.mkArray g.type.string [ ];
+        };
         "org/gnome/desktop/interface" = {
           "enable-hot-corners" = g.mkBoolean false;
           "font-antialiasing" = g.mkString "grayscale";
@@ -113,6 +104,12 @@ in
             map (gnomeExtension: gnomeExtension.extensionUuid) gnomeExtensions
           );
         };
+        "org/gnome/shell/extensions/appindicator" = {
+          "icon-brightness" = g.mkDouble 1.0;
+          "icon-opacity" = g.mkInt32 255;
+          "icon-saturation" = g.mkDouble 1.0;
+          "icon-size" = g.mkInt32 20;
+        };
         "org/gnome/shell/extensions/blur-my-shell/panel" = {
           "override-background-dynamically" = g.mkBoolean true;
         };
@@ -124,27 +121,10 @@ in
       # Themes
       {
         "org/gnome/desktop/interface" = {
-          "document-font-name" = g.mkString "Inter 10";
-          "font-name" = g.mkString "Inter Medium 10";
           "monospace-font-name" = g.mkString "Iosevka 10";
-          "icon-theme" = g.mkString "Colloid";
-        };
-        "org/gnome/desktop/interface/user-theme" = {
-          "name" = g.mkString "Colloid-Dark-Compact";
         };
       }
     ];
 
-  home.packages = gnomeExtensions ++ [
-    (pkgs.colloid-gtk-theme.override {
-      colorVariants = [ "dark" ];
-      sizeVariants = [ "compact" ];
-      # themeVariants = [ "default" ];
-      tweaks = [ "normal" ];
-    })
-    (pkgs.colloid-icon-theme.override {
-      # colorVariants = [ "default" ];
-      # schemeVariants = [ "default" ];
-    })
-  ];
+  home.packages = gnomeExtensions;
 }
