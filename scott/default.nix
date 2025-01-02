@@ -7,6 +7,7 @@
     ./desktop.nix
     ./firefox.nix
     ./fish.nix
+    ./ghostty.nix
     ./git.nix
     ./gpg.nix
     ./kitty.nix
