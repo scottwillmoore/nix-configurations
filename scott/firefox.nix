@@ -1,79 +1,55 @@
-{ lib, pkgs, ... }:
+{ pkgs, ... }:
 let
-  colloid-firefox-theme = pkgs.colloid-gtk-theme.overrideAttrs {
-    pname = "colloid-firefox-theme";
+  firefox-gnome-theme = pkgs.fetchFromGitHub {
+    owner = "rafaelmardojai";
+    repo = "firefox-gnome-theme";
+    tag = "v133.1";
 
-    buildInputs = [ ];
-    nativeBuildInputs = [ ];
-    propagatedUserEnvPkgs = [ ];
-
-    installPhase = ''
-      cp -r ./src/other/firefox/chrome/ $out/
-
-      echo '@import "Colloid/theme.css";' > $out/userChrome.css
-      rm $out/customChrome.css
-    '';
-
-    meta = {
-      description = "A modern and clean Firefox theme";
-      platforms = lib.platforms.all;
-    };
+    hash = "sha256-onO+zd9ssgsLC5ax3UWPZ41DcZPkxdXT8JmmjDkw944=";
   };
-
-  firefox-gnome-theme = { };
 in
 {
   # Maybe declarative Firefox profiles are too heavy-handed?
-  # Would it be better just to apply userChrome and userContent and leave settings to Firefox Sync?
+  # Would it be better just to apply `userChrome.css` and `userContent.css` and leave settings to Firefox Sync?
+  # What settings are synced and therefore what settings should be put in `user.js`.
   # What about language packs?
-  # What else...?
-  # Also the Colloid Firefox theme seemed broken/bad?
-  # TODO: SET UP GIT WITH GPG!
+  # What about policies?
 
-  programs.firefox.enable = false;
-  programs.firefox.package = pkgs.firefox;
+  programs.firefox = {
+    enable = true;
 
-  # programs.firefox.policies = {
-  #   DisablePocket = true;
-  #   Homepage = "about:blank";
-  #   NoDefaultBookmarks = true;
-  #   OverrideFirstRunPage = "";
-  #   OverridePostUpdatePage = "";
-  #   PasswordManagerEnabled = false;
-  # };
+    package = null;
 
-  programs.firefox.languagePacks = [
-    "en-GB"
-    "en-US"
-  ];
+    profiles.default = {
+      settings = {
+        "app.normandy.first_run" = false;
+        "browser.aboutConfig.showWarning" = false;
+        "browser.newtabpage.enabled" = false;
+        "browser.startup.homepage" = "chrome://browser/content/blanktab.html";
+        "sidebar.position_start" = false;
+        "signon.rememberSignons" = false;
 
-  programs.firefox.profiles.default = {
-    # extensions = { };
+        # "browser.contentblocking.category" = "strict";
+        # "privacy.fingerprintingProtection" = true;
+        # "privacy.trackingprotection.emailtracking.enabled" = true;
+        # "privacy.trackingprotection.enabled" = true;
+        # "privacy.trackingprotection.socialtracking.enabled" = true;
 
-    settings = {
-      "app.normandy.first_run" = false;
-      "browser.aboutConfig.showWarning" = false;
-      "browser.contentblocking.category" = "strict";
-      "browser.newtabpage.enabled" = false;
-      "browser.startup.homepage" = "chrome://browser/content/blanktab.html";
-      "privacy.fingerprintingProtection" = true;
-      "privacy.trackingprotection.emailtracking.enabled" = true;
-      "privacy.trackingprotection.enabled" = true;
-      "privacy.trackingprotection.socialtracking.enabled" = true;
-      "sidebar.position_start" = false;
-      "signon.rememberSignons" = false;
-      "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
+        # https://github.com/rafaelmardojai/firefox-gnome-theme/blob/master/configuration/user.js
+        "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
+        "browser.uidensity" = 0;
+        "svg.context-properties.content.enabled" = true;
+        "browser.theme.dark-private-windows" = false;
+        "widget.gtk.rounded-bottom-corners.enabled" = true;
+      };
 
-      # "browser.startup.page" = 3;
-      # "services.sync.username" = settings.emailAddress;
+      userChrome = ''
+        @import "${firefox-gnome-theme}/userChrome.css";
+      '';
+
+      userContent = ''
+        @import "${firefox-gnome-theme}/userContent.css";
+      '';
     };
-
-    userChrome = ''
-      @import "${colloid-firefox-theme}/userChrome.css";
-    '';
-
-    userContent = ''
-      @import "${colloid-firefox-theme}/userContent.css";
-    '';
   };
 }
