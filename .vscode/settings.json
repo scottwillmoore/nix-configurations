@@ -1,0 +1,20 @@
+{
+	"cSpell.allowCompoundWords": true,
+	"nix.enableLanguageServer": true,
+	"nix.serverPath": "nixd",
+	"nix.serverSettings": {
+		"nixd": {
+			"nixpkgs": {
+				"expr": "let inherit (builtins.getFlake \"${workspaceFolder}\") inputs; pkgs = import inputs.nixpkgs { }; in pkgs"
+			},
+			"options": {
+				"home-manager": {
+					"expr": "let inherit (builtins.getFlake \"${workspaceFolder}\") inputs; pkgs = import inputs.nixpkgs { }; lib = import \"${inputs.home-manager}/modules/lib/stdlib-extended.nix\" pkgs.lib; in (lib.evalModules { modules = (import \"${inputs.home-manager}/modules/modules.nix\") { inherit lib pkgs; check = false; }; }).options"
+				},
+				"nixos": {
+					"expr": "let inherit (builtins.getFlake \"${workspaceFolder}\") inputs; pkgs = import inputs.nixpkgs { }; lib = pkgs.lib; in (lib.evalModules { modules = (import \"${inputs.nixpkgs}/nixos/modules/module-list.nix\") ++ [ { nixpkgs.hostPlatform = builtins.currentSystem; } ]; }).options"
+				}
+			}
+		}
+	}
+}
