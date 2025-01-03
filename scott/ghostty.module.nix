@@ -22,6 +22,10 @@ let
   };
 in
 {
+  disabledModules = [
+    "programs/ghostty.nix"
+  ];
+
   options = lib.setAttrByPath ghosttyPath {
     enable = lib.mkEnableOption "Ghostty";
 
