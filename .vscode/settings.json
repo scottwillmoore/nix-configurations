@@ -16,5 +16,8 @@
 				}
 			}
 		}
+	},
+	"workbench.editor.customLabels.patterns": {
+		"**/default.nix": "${dirname(1)}/${dirname(0)}*"
 	}
 }

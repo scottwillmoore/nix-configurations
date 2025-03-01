@@ -17,7 +17,7 @@
   };
 
   home-manager.users.${settings.userName} = {
-    imports = [ ../${settings.userName} ];
+    imports = [ inputs.self.homeModules.scott ];
   };
 
   users.mutableUsers = false;
