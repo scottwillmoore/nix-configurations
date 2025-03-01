@@ -18,7 +18,7 @@
     ## NixOS
 
     lanzaboote.inputs.nixpkgs.follows = "nixpkgs";
-    lanzaboote.url = "github:nix-community/lanzaboote/v0.4.1";
+    lanzaboote.url = "github:nix-community/lanzaboote/v0.4.2";
 
     nix-flatpak.url = "github:gmodena/nix-flatpak";
 
