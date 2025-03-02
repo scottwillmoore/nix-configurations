@@ -45,7 +45,7 @@
         "x86_64-linux"
       ];
 
-      flake = {
+      outputs = {
         inherit lib;
       };
     };

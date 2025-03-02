@@ -60,7 +60,7 @@ let
 in
 {
   # https://determinate.systems/posts/flake-schemas/
-  flake = {
+  outputs = {
     flakeModules = readImportPaths "${self}/modules/flake";
 
     homeModules = readImportPaths "${self}/modules/home";
