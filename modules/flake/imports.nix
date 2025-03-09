@@ -1,36 +1,34 @@
 {
-  inputs,
   self,
+  inputs,
+  utilities,
   ...
 }:
 let
-  # TODO
-  lib = inputs.self.lib;
-
   readImportPaths =
     dirPath:
     if builtins.pathExists dirPath then
-      lib.pipe dirPath [
+      utilities.pipe dirPath [
         builtins.readDir
-        (lib.mapAttrsToList (
+        (utilities.mapAttrsToList (
           entryName: entryType:
           let
             importPath = "${dirPath}/${entryName}";
           in
-          if entryType == "regular" && lib.hasSuffix ".nix" entryName then
-            lib.nameValuePair (lib.removeSuffix ".nix" entryName) importPath
+          if entryType == "regular" && utilities.hasSuffix ".nix" entryName then
+            utilities.nameValuePair (utilities.removeSuffix ".nix" entryName) importPath
           else if entryType == "directory" && builtins.pathExists "${importPath}/default.nix" then
-            lib.nameValuePair entryName importPath
+            utilities.nameValuePair entryName importPath
           else
             null
         ))
-        (lib.filter (element: element != null))
-        lib.listToAttrs
+        (utilities.filter (element: element != null))
+        utilities.listToAttrs
       ]
     else
       { };
 
-  mapImportPaths = f: dirPath: lib.mapAttrs f (readImportPaths dirPath);
+  mapImportPaths = f: dirPath: utilities.mapAttrs f (readImportPaths dirPath);
 
   mkNixosConfiguration =
     name: path:
@@ -40,7 +38,7 @@ let
       ];
       specialArgs = {
         inherit inputs;
-        inherit lib;
+        inherit utilities;
 
         # TODO
         settings = {

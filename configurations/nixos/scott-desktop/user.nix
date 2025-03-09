@@ -2,6 +2,7 @@
   inputs,
   pkgs,
   settings,
+  utilities,
   ...
 }:
 {
@@ -14,6 +15,7 @@
   home-manager.extraSpecialArgs = {
     inherit inputs;
     inherit settings;
+    inherit utilities;
   };
 
   home-manager.users.${settings.userName} = {

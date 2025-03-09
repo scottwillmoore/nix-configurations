@@ -2,6 +2,7 @@
   config,
   lib,
   pkgs,
+  utilities,
   ...
 }:
 let
@@ -38,7 +39,7 @@ in
     "services/gpg-agent.nix"
   ];
 
-  options = lib.merge [
+  options = utilities.merge [
     (lib.setAttrByPath gpgPath {
       enable = lib.mkEnableOption "GnuPG";
 

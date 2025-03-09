@@ -27,9 +27,6 @@
 
   outputs =
     inputs:
-    let
-      lib = inputs.nixpkgs.lib.extend (self: super: import ./lib.nix super);
-    in
     inputs.flake-parts.lib.mkFlake { inherit inputs; } {
       imports = [
         ./modules/flake
@@ -44,9 +41,5 @@
       systems = [
         "x86_64-linux"
       ];
-
-      outputs = {
-        inherit lib;
-      };
     };
 }
