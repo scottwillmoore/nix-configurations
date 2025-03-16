@@ -7,6 +7,9 @@ let
     # https://extensions.gnome.org/extension/615/appindicator-support/
     pkgs.gnomeExtensions.appindicator
 
+    # https://extensions.gnome.org/extension/6682/astra-monitor/
+    pkgs.gnomeExtensions.astra-monitor
+
     # https://extensions.gnome.org/extension/3193/blur-my-shell/
     pkgs.gnomeExtensions.blur-my-shell
 
