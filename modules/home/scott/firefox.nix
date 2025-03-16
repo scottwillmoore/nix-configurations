@@ -45,6 +45,10 @@ in
 
       userChrome = ''
         @import "${firefox-gnome-theme}/userChrome.css";
+
+        #TabsToolbar:not([customizing]) {
+          visibility: collapse;
+        }
       '';
 
       userContent = ''
