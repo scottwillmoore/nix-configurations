@@ -39,6 +39,7 @@ in
     "programs/gh.nix"
     "programs/git-credential-oauth.nix"
     "programs/git.nix"
+    "programs/mergiraf.nix"
   ];
 
   options = lib.setAttrByPath gitPath {
