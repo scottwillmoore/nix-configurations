@@ -3,10 +3,9 @@
   home.stateVersion = "24.05";
 
   imports = [
-    ./bash.nix
     ./desktop.nix
     ./firefox.nix
-    ./fish.nix
+    ./shell.nix
     ./ghostty.nix
     ./git.nix
     ./gpg.nix
