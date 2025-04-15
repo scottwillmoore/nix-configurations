@@ -15,6 +15,9 @@
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
     home-manager.url = "github:nix-community/home-manager";
 
+    firefox-gnome-theme.flake = false;
+    firefox-gnome-theme.url = "github:rafaelmardojai/firefox-gnome-theme";
+
     ## NixOS
 
     lanzaboote.inputs.nixpkgs.follows = "nixpkgs";

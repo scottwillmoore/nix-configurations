@@ -1,13 +1,4 @@
-{ pkgs, ... }:
-let
-  firefox-gnome-theme = pkgs.fetchFromGitHub {
-    owner = "rafaelmardojai";
-    repo = "firefox-gnome-theme";
-    tag = "v137";
-
-    hash = "sha256-oiHLDHXq7ymsMVYSg92dD1OLnKLQoU/Gf2F1GoONLCE=";
-  };
-in
+{ inputs, ... }:
 {
   # Maybe declarative Firefox profiles are too heavy-handed?
   # Would it be better just to apply `userChrome.css` and `userContent.css` and leave settings to Firefox Sync?
@@ -44,15 +35,27 @@ in
       };
 
       userChrome = ''
-        @import "${firefox-gnome-theme}/userChrome.css";
+        @import "${inputs.firefox-gnome-theme}/userChrome.css";
 
+        /* Hide horizontal tabs. */
         #TabsToolbar:not([customizing]) {
-          visibility: collapse;
+          visibility: collapse !important;
+        }
+
+        /* Fix (what I think is) a bug in Firefox whereby a right-aligned sidebar
+         * has a thick border between it and the page content. This does not
+         * appear in a left-aligned sidebar. */
+        #sidebar-box {
+          @media -moz-pref("sidebar.revamp") {
+            &[positionend] {
+              margin-inline-start: 0 !important;
+            }
+          }
         }
       '';
 
       userContent = ''
-        @import "${firefox-gnome-theme}/userContent.css";
+        @import "${inputs.firefox-gnome-theme}/userContent.css";
       '';
     };
   };
