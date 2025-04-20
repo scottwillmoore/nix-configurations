@@ -1,3 +1,4 @@
+{ lib, pkgs, ... }:
 {
   programs.atuin = {
     enable = true;
@@ -13,28 +14,22 @@
 
       enter_accept = true;
       exit_mode = "return-query";
-
-      # keymap_cursor.vim_insert = "steady-bar";
-      # keymap_cursor.vim_normal = "steady-block";
-      # keymap_mode = "auto";
     };
   };
 
   programs.bash = {
     enable = true;
 
-    # A list of values which control how commands are remembered.
     historyControl = [
       "ignorespace"
     ];
 
-    # The maximum number of commands to remember on file.
+    # The maximum number of commands to remember on disk.
     historyFileSize = 1024 * 1024;
 
     # The maximum number of commands to remember in memory.
     historySize = 1024 * 1024;
 
-    # A list of values which control shell behaviour.
     shellOptions = [
       "autocd"
       "cdspell"
@@ -48,34 +43,35 @@
 
   # programs.carapace.enable = true;
 
-  programs.starship = {
-    enable = true;
-
-    enableTransience = true;
-
-    settings = {
-      command_timeout = 200;
-      scan_timeout = 20;
-
-      add_newline = false;
-      format = "$character";
-      right_format = "$all";
-    };
-  };
-
-  programs.zoxide.enable = true;
-
   programs.fish = {
     enable = true;
+
+    plugins = with pkgs.fishPlugins; [
+      {
+        name = "autopair";
+        inherit (autopair) src;
+      }
+      {
+        name = "tide";
+        inherit (tide) src;
+      }
+    ];
 
     interactiveShellInit = ''
       set fish_greeting
 
-      fish_vi_key_bindings
       set fish_cursor_default block
       set fish_cursor_insert line
       set fish_cursor_replace underscore
       set fish_cursor_replace_one underscore
+
+      fish_vi_key_bindings
     '';
   };
+
+  home.activation.configure-tide = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+    ${pkgs.fish}/bin/fish -c "tide configure --auto --style=Lean --prompt_colors='16 colors' --show_time=No --lean_prompt_height='Two lines' --prompt_connection=Disconnected --prompt_spacing=Compact --icons='Few icons' --transient=Yes"
+  '';
+
+  programs.zoxide.enable = true;
 }
