@@ -1,6 +1,6 @@
 {
 	"cSpell.allowCompoundWords": true,
-	"nix.enableLanguageServer": true,
+	"nix.enableLanguageServer": false,
 	"nix.serverPath": "nixd",
 	"nix.serverSettings": {
 		"nixd": {
