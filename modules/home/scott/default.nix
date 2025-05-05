@@ -2,6 +2,11 @@
 {
   home.stateVersion = "24.05";
 
+  disabledModules = [
+    "programs/kitty.nix"
+    "programs/pywal.nix"
+  ];
+
   imports = [
     ./desktop.nix
     ./firefox.nix
@@ -9,7 +14,7 @@
     ./ghostty.nix
     ./git.nix
     ./gpg.nix
-    ./kitty.nix
+    # ./kitty.nix
     ./readline.nix
     ./ssh.nix
   ];

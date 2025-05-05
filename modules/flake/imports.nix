@@ -36,6 +36,7 @@ let
       modules = [
         path
       ];
+
       specialArgs = {
         inherit inputs;
         inherit utilities;
@@ -64,7 +65,10 @@ in
     homeModules = readImportPaths "${self}/modules/home";
 
     nixosConfigurations = mapImportPaths mkNixosConfiguration "${self}/configurations/nixos";
+
     nixosModules = readImportPaths "${self}/modules/nixos";
+
+    nixvimModules = readImportPaths "${self}/modules/nixvim";
 
     # TODO
     # darwinConfigurations = readImportPaths "${self}/configurations/darwin";
@@ -75,7 +79,7 @@ in
 
   perSystem =
     # https://github.com/NixOS/nixpkgs/blob/ec1aa8f0413f1ec74ec1a11a325983d0000183e7/lib/modules.nix#L537-L561
-    args@{ pkgs, ... }:
+    args@{ pkgs, system, ... }:
     {
       devShells = mapImportPaths (
         name: path:
@@ -86,6 +90,23 @@ in
           }
         )
       ) "${self}/shells";
+
+      nixvimConfigurations = mapImportPaths (
+        name: path:
+        inputs.nixvim.lib.evalNixvim {
+          modules = [
+            { nixpkgs.pkgs = pkgs; }
+            path
+          ];
+
+          extraSpecialArgs = {
+            inherit name;
+
+            inherit inputs;
+            inherit utilities;
+          };
+        }
+      ) "${self}/configurations/nixvim";
 
       # TODO
       # apps = readImportPaths "${self}/apps";

@@ -26,6 +26,11 @@
     nix-flatpak.url = "github:gmodena/nix-flatpak";
 
     nixos-hardware.url = "github:nixos/nixos-hardware";
+
+    ## Vim
+
+    nixvim.inputs.nixpkgs.follows = "nixpkgs";
+    nixvim.url = "github:nix-community/nixvim";
   };
 
   outputs =
