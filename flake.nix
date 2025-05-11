@@ -1,24 +1,14 @@
 {
+  description = "Scott's Nix configurations";
+
   inputs = {
-    # Flakes
-
-    flake-parts.url = "github:hercules-ci/flake-parts";
-
-    # Packages
-
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-
-    # Systems
-
-    ## Home Manager
-
-    home-manager.inputs.nixpkgs.follows = "nixpkgs";
-    home-manager.url = "github:nix-community/home-manager";
-
     firefox-gnome-theme.flake = false;
     firefox-gnome-theme.url = "github:rafaelmardojai/firefox-gnome-theme";
 
-    ## NixOS
+    flake-parts.url = "github:hercules-ci/flake-parts";
+
+    home-manager.inputs.nixpkgs.follows = "nixpkgs";
+    home-manager.url = "github:nix-community/home-manager";
 
     lanzaboote.inputs.nixpkgs.follows = "nixpkgs";
     lanzaboote.url = "github:nix-community/lanzaboote/v0.4.2";
@@ -27,7 +17,7 @@
 
     nixos-hardware.url = "github:nixos/nixos-hardware";
 
-    ## Vim
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
 
     nixvim.inputs.nixpkgs.follows = "nixpkgs";
     nixvim.url = "github:nix-community/nixvim";
@@ -39,12 +29,6 @@
       imports = [
         ./modules/flake
       ];
-
-      settings = {
-        emailAddress = "me@scottwillmoore.au";
-        fullName = "Scott Moore";
-        userName = "scott";
-      };
 
       systems = [
         "x86_64-linux"
