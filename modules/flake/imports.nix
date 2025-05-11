@@ -5,7 +5,7 @@
   ...
 }:
 let
-  readImportPaths =
+  getImportPaths =
     dirPath:
     if builtins.pathExists dirPath then
       utilities.pipe dirPath [
@@ -28,70 +28,69 @@ let
     else
       { };
 
-  mapImportPaths = f: dirPath: utilities.mapAttrs f (readImportPaths dirPath);
+  mapImportPaths = dirPath: f: utilities.mapAttrs f (getImportPaths dirPath);
 
-  mkNixosConfiguration =
-    name: path:
-    inputs.nixpkgs.lib.nixosSystem {
-      modules = [
-        path
-      ];
-
-      specialArgs = {
-        inherit inputs;
-        inherit utilities;
-
-        # TODO
-        settings = {
-          # Host
-          computerName = "Scott's Desktop";
-          hostName = "scott-desktop";
-          hostPlatform = "x86_64-linux";
-
-          # User
-          emailAddress = "me@scottwillmoore.au";
-          fullName = "Scott Moore";
-          hashedPassword = "$y$j9T$6K2y3iI1hLG.Ei4NAw.tB0$Zr8cPkLDf7pdmxXkzflwcgFAuvB/6qm6Mt9L4xC6EYC";
-          userName = "scott";
-        };
-      };
-    };
+  commonArgs = {
+    inherit inputs;
+    inherit utilities;
+  };
 in
 {
-  # https://determinate.systems/posts/flake-schemas/
   outputs = {
-    flakeModules = readImportPaths "${self}/modules/flake";
+    flakeModules = getImportPaths "${self}/modules/flake";
 
-    homeModules = readImportPaths "${self}/modules/home";
+    homeModules = getImportPaths "${self}/modules/home";
 
-    nixosConfigurations = mapImportPaths mkNixosConfiguration "${self}/configurations/nixos";
+    nixosConfigurations = mapImportPaths "${self}/configurations/nixos" (
+      name: path:
+      inputs.nixpkgs.lib.nixosSystem {
+        modules = [
+          path
+        ];
 
-    nixosModules = readImportPaths "${self}/modules/nixos";
+        specialArgs = commonArgs // {
+          inherit name;
 
-    nixvimModules = readImportPaths "${self}/modules/nixvim";
+          settings = {
+            # Host
+            computerName = "Scott's Desktop";
+            hostName = "scott-desktop";
+            hostPlatform = "x86_64-linux";
 
-    # TODO
-    # darwinConfigurations = readImportPaths "${self}/configurations/darwin";
-    # darwinModules = readImportPaths "${self}/modules/darwin";
-    # overlays = readImportPaths "${self}/overlays";
-    # templates = readImportPaths "${self}/templates";
+            # User
+            emailAddress = "me@scottwillmoore.au";
+            fullName = "Scott Moore";
+            hashedPassword = "$y$j9T$6K2y3iI1hLG.Ei4NAw.tB0$Zr8cPkLDf7pdmxXkzflwcgFAuvB/6qm6Mt9L4xC6EYC";
+            userName = "scott";
+          };
+        };
+      }
+    );
+
+    nixosModules = getImportPaths "${self}/modules/nixos";
+
+    nixvimModules = getImportPaths "${self}/modules/nixvim";
   };
 
   perSystem =
+    # Module arguments are only evaluated in a strict manner when deconstructed
+    # in order to prevent infinite recursion. Hence important attributes must be
+    # deconstructed by this function for them to be used by these imports!
     # https://github.com/NixOS/nixpkgs/blob/ec1aa8f0413f1ec74ec1a11a325983d0000183e7/lib/modules.nix#L537-L561
     args@{ pkgs, system, ... }:
     {
-      devShells = mapImportPaths (
+      devShells = mapImportPaths "${self}/shells" (
         name: path:
         import path (
-          args
+          commonArgs
+          // args
           // {
             inherit name;
           }
         )
-      ) "${self}/shells";
+      );
 
-      nixvimConfigurations = mapImportPaths (
+      nixvimConfigurations = mapImportPaths "${self}/configurations/nixvim" (
         name: path:
         inputs.nixvim.lib.evalNixvim {
           modules = [
@@ -99,18 +98,10 @@ in
             path
           ];
 
-          extraSpecialArgs = {
+          extraSpecialArgs = commonArgs // {
             inherit name;
-
-            inherit inputs;
-            inherit utilities;
           };
         }
-      ) "${self}/configurations/nixvim";
-
-      # TODO
-      # apps = readImportPaths "${self}/apps";
-      # packages = readImportPaths "${self}/packages";
-      # packages.homeConfigurations = readImportPaths "${self}/configurations/home";
+      );
     };
 }
