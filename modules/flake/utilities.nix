@@ -1,6 +1,6 @@
 { inputs, ... }:
-let
-  utilities = inputs.nixpkgs.lib.extend (
+{
+  _module.args.utilities = inputs.nixpkgs.lib.extend (
     _: previous:
     let
       # Attrsets
@@ -53,13 +53,4 @@ let
         ;
     }
   );
-in
-{
-  _module.args = {
-    inherit utilities;
-  };
-
-  outputs = {
-    inherit utilities;
-  };
 }

@@ -5,6 +5,22 @@ in
 {
   options = {
     settings = {
+      # Host
+
+      computerName = lib.mkOption {
+        type = types.str;
+      };
+
+      hostName = lib.mkOption {
+        type = types.str;
+      };
+
+      hostPlatform = lib.mkOption {
+        type = types.str;
+      };
+
+      # User
+
       emailAddress = lib.mkOption {
         type = types.str;
       };

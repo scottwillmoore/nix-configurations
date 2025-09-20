@@ -1,33 +1,25 @@
-{ pkgs, ... }:
+{ outputs, pkgs, ... }:
 {
-  system.stateVersion = "24.05";
-
   imports = [
+    outputs.nixosModules.common
+
     ./boot.nix
     ./desktop.nix
     ./file-system.nix
     ./flatpak.nix
     ./font.nix
     ./hardware.nix
-    ./keyboard.nix
-    ./locale.nix
-    ./network.nix
-    ./nix.nix
     ./user.nix
   ];
 
+  settings = {
+    computerName = "Scott's Desktop";
+    hostName = "scott-desktop";
+    hostPlatform = "x86_64-linux";
+  };
+
   documentation.doc.enable = false;
   documentation.info.enable = false;
-
-  nixpkgs.config.allowUnfree = true;
-
-  # Packages
-
-  environment.systemPackages = with pkgs; [
-    binutils
-    pciutils
-    usbutils
-  ];
 
   # Programs
 

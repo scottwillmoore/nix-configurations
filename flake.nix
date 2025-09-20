@@ -30,6 +30,13 @@
         ./modules/flake
       ];
 
+      settings = {
+        emailAddress = "me@scottwillmoore.au";
+        fullName = "Scott Moore";
+        hashedPassword = "$y$j9T$6K2y3iI1hLG.Ei4NAw.tB0$Zr8cPkLDf7pdmxXkzflwcgFAuvB/6qm6Mt9L4xC6EYC";
+        userName = "scott";
+      };
+
       systems = [
         "x86_64-linux"
       ];

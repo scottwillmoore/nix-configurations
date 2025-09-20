@@ -8,6 +8,13 @@
     "xhci_pci"
   ];
 
+  # Nvidia
+  # boot.initrd.kernelModules = [
+  #   "nvidia"
+  #   "nvidia_modeset"
+  #   "nvidia_drm"
+  # ];
+
   boot.initrd.systemd.enable = true;
 
   boot.lanzaboote.enable = true;

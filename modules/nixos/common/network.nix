@@ -2,9 +2,8 @@
 {
   networking.hostName = settings.hostName;
 
+  services.avahi.enable = true;
   services.avahi = {
-    enable = true;
-
     nssmdns4 = true;
 
     publish = {
@@ -16,9 +15,8 @@
     };
   };
 
+  services.openssh.enable = true;
   services.openssh = {
-    enable = true;
-
     startWhenNeeded = true;
   };
 }

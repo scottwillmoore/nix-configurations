@@ -1,7 +1,10 @@
 {
   self,
+
   inputs,
+  settings,
   utilities,
+
   ...
 }:
 let
@@ -32,6 +35,7 @@ let
 
   commonArgs = {
     inherit inputs;
+    inherit (self) outputs;
     inherit utilities;
   };
 in
@@ -45,24 +49,15 @@ in
       name: path:
       inputs.nixpkgs.lib.nixosSystem {
         modules = [
+          {
+            inherit settings;
+          }
+
           path
         ];
 
         specialArgs = commonArgs // {
           inherit name;
-
-          settings = {
-            # Host
-            computerName = "Scott's Desktop";
-            hostName = "scott-desktop";
-            hostPlatform = "x86_64-linux";
-
-            # User
-            emailAddress = "me@scottwillmoore.au";
-            fullName = "Scott Moore";
-            hashedPassword = "$y$j9T$6K2y3iI1hLG.Ei4NAw.tB0$Zr8cPkLDf7pdmxXkzflwcgFAuvB/6qm6Mt9L4xC6EYC";
-            userName = "scott";
-          };
         };
       }
     );
@@ -94,8 +89,12 @@ in
         name: path:
         inputs.nixvim.lib.evalNixvim {
           modules = [
-            { nixpkgs.pkgs = pkgs; }
+            {
+              nixpkgs.pkgs = pkgs;
+            }
+
             path
+
           ];
 
           extraSpecialArgs = commonArgs // {

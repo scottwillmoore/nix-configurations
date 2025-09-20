@@ -37,6 +37,7 @@ in
     "programs/bun.nix"
     "programs/gh-dash.nix"
     "programs/gh.nix"
+    "programs/git-credential-keepassxc.nix"
     "programs/git-credential-oauth.nix"
     "programs/git.nix"
     "programs/mergiraf.nix"
