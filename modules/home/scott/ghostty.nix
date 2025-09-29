@@ -39,7 +39,7 @@
         "${codePoints}=Symbols Nerd Font";
 
       # Window
-      theme = "dark:tokyonight,light:tokyonight-day";
+      theme = "dark:TokyoNight Night,light:TokyoNight Day";
       window-theme = "ghostty";
       resize-overlay = "never";
     };
