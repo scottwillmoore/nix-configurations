@@ -3,8 +3,9 @@
   system.stateVersion = "22.05";
 
   imports = [
-    ./aliases.nix
     ./settings.nix
+
+    ./fonts.nix
 
     ./keyboard.nix
     ./locale.nix

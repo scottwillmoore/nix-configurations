@@ -7,7 +7,6 @@
     ./desktop.nix
     ./file-system.nix
     ./flatpak.nix
-    ./font.nix
     ./hardware.nix
     ./user.nix
   ];
