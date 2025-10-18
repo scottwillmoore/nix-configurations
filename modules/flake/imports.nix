@@ -6,7 +6,6 @@
   inputs,
   outputs,
   settings,
-  utilities,
 
   ...
 }:
@@ -40,7 +39,6 @@ let
     inherit inputs;
     inherit outputs;
     # inherit settings;
-    inherit utilities;
   };
 in
 {
@@ -56,6 +54,13 @@ in
           {
             inherit settings;
           }
+
+          (
+            { outputs, settings, ... }:
+            {
+              nixpkgs.pkgs = outputs.nixPackages.${settings.hostPlatform};
+            }
+          )
 
           path
         ];
@@ -76,7 +81,7 @@ in
     # in order to prevent infinite recursion. Hence important attributes must be
     # deconstructed by this function for them to be used by these imports!
     # https://github.com/NixOS/nixpkgs/blob/ec1aa8f0413f1ec74ec1a11a325983d0000183e7/lib/modules.nix#L537-L561
-    args@{ pkgs, system, ... }:
+    args@{ packages, system, ... }:
     {
       devShells = mapImportPaths "${self}/shells" (
         name: path:
@@ -94,7 +99,7 @@ in
         inputs.nixvim.lib.evalNixvim {
           modules = [
             {
-              nixpkgs.pkgs = pkgs;
+              nixpkgs.pkgs = packages;
             }
 
             path

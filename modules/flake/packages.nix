@@ -17,6 +17,10 @@ let
     ;
 in
 {
+  disabledModules = [
+    "${inputs.flake-parts}/modules/nixpkgs.nix"
+  ];
+
   imports = [
     (mkTransposedPerSystemModule {
       name = "nixPackages";
@@ -31,7 +35,7 @@ in
       perSystem =
         { system, ... }:
         {
-          _module.args.packages = outputs.nixPackages;
+          _module.args.packages = outputs.nixPackages.${system};
 
           nixPackages = import inputs.nixpkgs {
             inherit system;

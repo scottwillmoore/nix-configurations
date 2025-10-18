@@ -1,6 +1,6 @@
-{ pkgs, ... }:
-pkgs.mkShellNoCC {
-  packages = with pkgs; [
+{ packages, ... }:
+packages.mkShellNoCC {
+  packages = with packages; [
     nixd
     nixfmt-rfc-style
   ];
