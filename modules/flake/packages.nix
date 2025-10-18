@@ -29,11 +29,17 @@ in
 
     {
       perSystem =
-        { inputs', ... }:
+        { system, ... }:
         {
           _module.args.packages = outputs.nixPackages;
 
-          nixPackages = inputs'.nixpkgs.legacyPackages;
+          nixPackages = import inputs.nixpkgs {
+            inherit system;
+
+            config = {
+              allowUnfree = true;
+            };
+          };
         };
     }
   ];
