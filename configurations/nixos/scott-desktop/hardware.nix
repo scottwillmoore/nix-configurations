@@ -10,9 +10,18 @@
     inputs.nixos-hardware.nixosModules.common-pc-ssd
   ];
 
-  hardware.enableRedistributableFirmware = true;
+  boot.initrd.availableKernelModules = [
+    "nvme"
+    "usbhid"
+    "xhci_pci"
+  ];
 
-  services.fwupd.enable = true;
+  # Nvidia
+  # boot.initrd.kernelModules = [
+  #   "nvidia"
+  #   "nvidia_modeset"
+  #   "nvidia_drm"
+  # ];
 
   # Nvidia
   hardware.nvidia.open = false;

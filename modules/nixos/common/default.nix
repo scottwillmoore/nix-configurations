@@ -1,15 +1,13 @@
 { pkgs, ... }:
 {
-  system.stateVersion = "22.05";
-
   imports = [
-    ./settings.nix
-
-    ./fonts.nix
-
+    ./boot.nix
+    ./firmware.nix
     ./keyboard.nix
     ./locale.nix
     ./network.nix
+
+    ./settings.nix
     ./nix.nix
     ./nixpkgs.nix
   ];

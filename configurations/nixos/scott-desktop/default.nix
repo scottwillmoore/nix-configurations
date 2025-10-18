@@ -1,10 +1,11 @@
 { outputs, pkgs, ... }:
 {
+  system.stateVersion = "25.05";
+
   imports = [
     outputs.nixosModules.common
+    outputs.nixosModules.desktop
 
-    ./boot.nix
-    ./desktop.nix
     ./file-system.nix
     ./flatpak.nix
     ./hardware.nix
