@@ -1,7 +1,10 @@
 {
+  lib,
+
   self,
 
   inputs,
+  outputs,
   settings,
   utilities,
 
@@ -11,31 +14,32 @@ let
   getImportPaths =
     dirPath:
     if builtins.pathExists dirPath then
-      utilities.pipe dirPath [
+      lib.pipe dirPath [
         builtins.readDir
-        (utilities.mapAttrsToList (
+        (lib.mapAttrsToList (
           entryName: entryType:
           let
             importPath = "${dirPath}/${entryName}";
           in
-          if entryType == "regular" && utilities.hasSuffix ".nix" entryName then
-            utilities.nameValuePair (utilities.removeSuffix ".nix" entryName) importPath
+          if entryType == "regular" && lib.hasSuffix ".nix" entryName then
+            lib.nameValuePair (lib.removeSuffix ".nix" entryName) importPath
           else if entryType == "directory" && builtins.pathExists "${importPath}/default.nix" then
-            utilities.nameValuePair entryName importPath
+            lib.nameValuePair entryName importPath
           else
             null
         ))
-        (utilities.filter (element: element != null))
-        utilities.listToAttrs
+        (lib.filter (element: element != null))
+        lib.listToAttrs
       ]
     else
       { };
 
-  mapImportPaths = dirPath: f: utilities.mapAttrs f (getImportPaths dirPath);
+  mapImportPaths = dirPath: f: lib.mapAttrs f (getImportPaths dirPath);
 
   commonArgs = {
     inherit inputs;
-    inherit (self) outputs;
+    inherit outputs;
+    # inherit settings;
     inherit utilities;
   };
 in

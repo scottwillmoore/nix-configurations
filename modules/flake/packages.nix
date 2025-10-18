@@ -2,9 +2,8 @@
   lib,
   flake-parts-lib,
 
-  self,
-
   inputs,
+  outputs,
 
   ...
 }:
@@ -28,16 +27,14 @@ in
       file = ./packages.nix;
     })
 
-    ({
+    {
       perSystem =
         { inputs', ... }:
         {
-          config = {
-            _module.args.packages = self.outputs.nixPackages;
+          _module.args.packages = outputs.nixPackages;
 
-            nixPackages = inputs'.nixpkgs.legacyPackages;
-          };
+          nixPackages = inputs'.nixpkgs.legacyPackages;
         };
-    })
+    }
   ];
 }

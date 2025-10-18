@@ -2,7 +2,6 @@
   config,
   lib,
   pkgs,
-  utilities,
   ...
 }:
 let
@@ -39,7 +38,7 @@ in
     "services/gpg-agent.nix"
   ];
 
-  options = utilities.merge [
+  options = lib.foldl' lib.recursiveUpdate { } [
     (lib.setAttrByPath gpgPath {
       enable = lib.mkEnableOption "GnuPG";
 

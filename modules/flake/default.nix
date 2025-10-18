@@ -8,10 +8,9 @@
 
     inputs.nixvim.flakeModules.default
 
-    ./aliases.nix
     ./imports.nix
+    ./outputs.nix
     ./packages.nix
     ./settings.nix
-    ./utilities.nix
   ];
 }
