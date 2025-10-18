@@ -10,6 +10,7 @@
 
     ./aliases.nix
     ./imports.nix
+    ./packages.nix
     ./settings.nix
     ./utilities.nix
   ];
