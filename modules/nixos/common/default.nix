@@ -5,6 +5,8 @@
     ./firmware.nix
     ./keyboard.nix
     ./locale.nix
+    ./machine-info.module.nix
+    ./machine-info.nix
     ./network.nix
     ./nix.nix
 
