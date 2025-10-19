@@ -9,6 +9,7 @@
     ./machine-info.nix
     ./network.nix
     ./nix.nix
+    ./user.nix
 
     ./settings.nix
   ];
