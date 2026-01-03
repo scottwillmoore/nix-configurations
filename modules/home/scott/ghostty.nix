@@ -8,7 +8,7 @@
     config = {
       # Font
       font-family = "Iosevka";
-      font-size = 16;
+      font-size = 14;
       font-codepoint-map =
         let
           codePoints = lib.concatStringsSep "," [
@@ -39,9 +39,13 @@
         "${codePoints}=Symbols Nerd Font";
 
       # Window
-      theme = "dark:TokyoNight Night,light:TokyoNight Day";
-      window-theme = "ghostty";
+      gtk-titlebar-style = "tabs";
+      gtk-toolbar-style = "flat";
       resize-overlay = "never";
+      theme = "dark:TokyoNight Night,light:TokyoNight Day";
+      window-padding-balance = true;
+      window-padding-color = "extend";
+      window-theme = "ghostty";
     };
   };
 }
