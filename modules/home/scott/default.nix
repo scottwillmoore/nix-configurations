@@ -14,7 +14,6 @@
     ./ghostty.nix
     ./git.nix
     ./gpg.nix
-    # ./kitty.nix
     ./readline.nix
     ./ssh.nix
   ];
