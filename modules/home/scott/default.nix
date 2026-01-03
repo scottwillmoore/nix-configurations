@@ -30,11 +30,11 @@
     ripgrep
     wget
 
-    # Nickel
-    nickel
-    nls
+    # Language: Lua
+    lua-language-server
+    stylua
 
-    # Nix
+    # Language: Nix
     nh
     nixd
     nixfmt-rfc-style

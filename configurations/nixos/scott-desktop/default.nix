@@ -25,9 +25,8 @@
 
   programs.fish.enable = true;
 
+  programs.neovim.enable = true;
   programs.neovim = {
-    enable = true;
-
     defaultEditor = true;
     vimAlias = true;
   };
