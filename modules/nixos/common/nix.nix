@@ -34,12 +34,6 @@
 
   # Settings
 
-  nix.distributedBuilds = true;
-
-  nix.daemonCPUSchedPolicy = "idle";
-  nix.daemonIOSchedClass = "idle";
-  nix.daemonIOSchedPriority = 7;
-
   nix.gc = {
     automatic = true;
     dates = "04:00";
