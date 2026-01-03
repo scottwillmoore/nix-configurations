@@ -35,12 +35,18 @@ in
 {
   disabledModules = [
     "programs/bun.nix"
+    "programs/delta.nix"
+    "programs/diff-highlight.nix"
+    "programs/diff-so-fancy.nix"
+    "programs/difftastic.nix"
     "programs/gh-dash.nix"
     "programs/gh.nix"
     "programs/git-credential-keepassxc.nix"
     "programs/git-credential-oauth.nix"
     "programs/git.nix"
     "programs/mergiraf.nix"
+    "programs/patdiff.nix"
+    "programs/riff.nix"
   ];
 
   options = lib.setAttrByPath gitPath {
