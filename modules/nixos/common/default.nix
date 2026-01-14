@@ -3,6 +3,7 @@
   imports = [
     ./boot.nix
     ./firmware.nix
+    ./hardware.nix
     ./keyboard.nix
     ./locale.nix
     ./machine-info.module.nix
