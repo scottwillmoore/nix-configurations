@@ -19,10 +19,13 @@
   ];
 
   home.packages = with pkgs; [
-    # Applications
+    # Browsers
     firefox
-    kitty
+    ungoogled-chromium
+
+    # Editors
     vscode
+    zed-editor
 
     # Utilities
     curl
@@ -30,11 +33,11 @@
     ripgrep
     wget
 
-    # Language: Lua
+    # Languages: Lua
     lua-language-server
     stylua
 
-    # Language: Nix
+    # Languages: Nix
     nh
     nixd
     nixfmt-rfc-style
