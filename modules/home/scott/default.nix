@@ -41,7 +41,7 @@
     # Languages: Nix
     nh
     nixd
-    nixfmt-rfc-style
+    nixfmt
   ];
 
   home.sessionVariables.NIXOS_OZONE_WL = "1";
