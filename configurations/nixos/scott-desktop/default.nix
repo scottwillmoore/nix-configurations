@@ -7,7 +7,6 @@
     outputs.nixosModules.desktop
 
     ./file-system.nix
-    ./flatpak.nix
     ./hardware.nix
     ./user.nix
   ];

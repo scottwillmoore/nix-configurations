@@ -16,4 +16,6 @@
 
   boot.plymouth.enable = true;
   boot.plymouth.theme = "spinner";
+
+  services.flatpak.enable = true;
 }

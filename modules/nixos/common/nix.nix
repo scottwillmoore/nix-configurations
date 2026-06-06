@@ -54,7 +54,6 @@
       "cgroups"
       "flakes"
       "nix-command"
-      "no-url-literals"
     ];
   };
 

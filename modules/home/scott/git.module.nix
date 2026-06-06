@@ -39,6 +39,7 @@ in
     "programs/diff-highlight.nix"
     "programs/diff-so-fancy.nix"
     "programs/difftastic.nix"
+    "programs/ec.nix"
     "programs/gh-dash.nix"
     "programs/gh.nix"
     "programs/git-credential-keepassxc.nix"
