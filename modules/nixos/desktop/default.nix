@@ -6,9 +6,15 @@
 
   # fonts.enableDefaultPackages = false;
   fonts.packages = with pkgs; [
-    inter
+    # Monospace
+    fira-code
     iosevka
+    jetbrains-mono
+    lilex
     nerd-fonts.symbols-only
+
+    # Sans-serif
+    inter
     noto-fonts
     noto-fonts-color-emoji
     roboto

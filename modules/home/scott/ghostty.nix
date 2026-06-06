@@ -7,7 +7,7 @@
 
     config = {
       # Font
-      font-family = "Iosevka";
+      font-family = "Lilex";
       font-size = 14;
       font-codepoint-map =
         let
