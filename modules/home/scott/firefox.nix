@@ -1,4 +1,4 @@
-{ inputs, ... }:
+{ config, inputs, ... }:
 {
   # Maybe declarative Firefox profiles are too heavy-handed?
   # Would it be better just to apply `userChrome.css` and `userContent.css` and leave settings to Firefox Sync?
@@ -10,6 +10,8 @@
     enable = true;
 
     package = null;
+
+    configPath = "${config.xdg.configHome}/mozilla/firefox";
 
     profiles.default = {
       settings = {
