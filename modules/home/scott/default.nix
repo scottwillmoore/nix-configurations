@@ -30,6 +30,7 @@
     # Utilities
     curl
     fd
+    jujutsu
     ripgrep
     wget
 
