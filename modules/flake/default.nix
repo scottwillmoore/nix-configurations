@@ -6,8 +6,6 @@
 
     inputs.home-manager.flakeModules.default
 
-    inputs.nixvim.flakeModules.default
-
     ./imports.nix
     ./outputs.nix
     ./packages.nix

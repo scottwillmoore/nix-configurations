@@ -16,9 +16,6 @@
     nixos-hardware.url = "github:nixos/nixos-hardware";
 
     nixpkgs.url = "github:nixos/nixpkgs/nixos-26.05";
-
-    nixvim.inputs.nixpkgs.follows = "nixpkgs";
-    nixvim.url = "github:nix-community/nixvim";
   };
 
   outputs =

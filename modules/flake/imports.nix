@@ -72,14 +72,12 @@ in
     );
 
     nixosModules = getImportPaths "${self}/modules/nixos";
-
-    nixvimModules = getImportPaths "${self}/modules/nixvim";
   };
 
   perSystem =
-    # Module arguments are only evaluated in a strict manner when deconstructed
-    # in order to prevent infinite recursion. Hence important attributes must be
-    # deconstructed by this function for them to be used by these imports!
+    # Module arguments are only evaluated in a strict manner when deconstructed to prevent infinite
+    # recursion. Thus important attributes must be deconstructed by this function for them to be
+    # used by the imports!
     # https://github.com/NixOS/nixpkgs/blob/ec1aa8f0413f1ec74ec1a11a325983d0000183e7/lib/modules.nix#L537-L561
     args@{ packages, system, ... }:
     {
@@ -92,24 +90,6 @@ in
             inherit name;
           }
         )
-      );
-
-      nixvimConfigurations = mapImportPaths "${self}/configurations/nixvim" (
-        name: path:
-        inputs.nixvim.lib.evalNixvim {
-          modules = [
-            {
-              nixpkgs.pkgs = packages;
-            }
-
-            path
-
-          ];
-
-          extraSpecialArgs = commonArgs // {
-            inherit name;
-          };
-        }
       );
     };
 }
