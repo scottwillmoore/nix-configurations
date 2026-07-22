@@ -38,7 +38,6 @@ let
   commonArgs = {
     inherit inputs;
     inherit outputs;
-    # inherit settings;
   };
 in
 {
