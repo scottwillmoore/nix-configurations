@@ -7,7 +7,7 @@
 
     config = {
       # Font
-      font-family = "Lilex";
+      font-family = "JetBrains Mono";
       font-size = 14;
       font-codepoint-map =
         let

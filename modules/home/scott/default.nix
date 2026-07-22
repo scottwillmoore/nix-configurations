@@ -27,9 +27,14 @@
     vscode
     zed-editor
 
+    # Tools
+    devenv
+    opencode
+
     # Utilities
     curl
     fd
+    git
     jujutsu
     ripgrep
     wget
@@ -45,6 +50,10 @@
   ];
 
   home.sessionVariables.NIXOS_OZONE_WL = "1";
+
+  home.shellAliases = {
+    "zed" = "zeditor";
+  };
 
   xdg.enable = true;
 
