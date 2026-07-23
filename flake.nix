@@ -11,9 +11,7 @@
     home-manager.url = "github:nix-community/home-manager/release-26.05";
 
     lanzaboote.inputs.nixpkgs.follows = "nixpkgs";
-    lanzaboote.url = "github:nix-community/lanzaboote/v0.4.3";
-
-    nixos-hardware.url = "github:nixos/nixos-hardware";
+    lanzaboote.url = "github:nix-community/lanzaboote/v1.1.0";
 
     nixpkgs.url = "github:nixos/nixpkgs/nixos-26.05";
   };
@@ -26,6 +24,9 @@
       ];
 
       settings = {
+        # authorizedKeys = [
+        #   "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHpwam0hQH7uJUC6DfeApxxHQ07t47SzSVT/kHmOgDkT"
+        # ];
         emailAddress = "me@scottwillmoore.au";
         fullName = "Scott Moore";
         hashedPassword = "$y$j9T$6K2y3iI1hLG.Ei4NAw.tB0$Zr8cPkLDf7pdmxXkzflwcgFAuvB/6qm6Mt9L4xC6EYC";
