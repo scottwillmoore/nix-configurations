@@ -1,11 +1,9 @@
 { settings, ... }:
 {
-  networking.firewall.enable = true;
-  networking.firewall = {
-    allowedTCPPorts = [ 8080 ];
-  };
-
+  environment.machineInfo.PRETTY_HOSTNAME = settings.computerName;
   networking.hostName = settings.hostName;
+
+  # MDNS
 
   services.avahi.enable = true;
   services.avahi = {
@@ -14,20 +12,14 @@
     publish.enable = true;
     publish = {
       addresses = true;
-      domain = true;
       userServices = true;
-      workstation = true;
     };
   };
+
+  # SSH
 
   services.openssh.enable = true;
   services.openssh = {
     startWhenNeeded = true;
   };
-
-  # TODO: Printing shouldn't be enabled on all my devices.
-  services.printing.enable = true;
-
-  # TODO: Add a Tailscale network for my devices.
-  # services.tailscale.enable = true;
 }

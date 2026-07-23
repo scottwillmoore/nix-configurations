@@ -1,9 +1,4 @@
-{
-  inputs,
-  lib,
-  pkgs,
-  ...
-}:
+{ inputs, pkgs, ... }:
 {
   nix.package = pkgs.nixVersions.latest;
 
@@ -11,34 +6,13 @@
 
   nix.channel.enable = false;
 
-  nix.settings.flake-registry =
-    let
-      inherit (builtins) toFile toJSON;
-    in
-    toFile "flake-registry.json" (toJSON {
-      flakes = [ ];
-      version = 2;
-    });
-
-  nix.registry =
-    let
-      inherit (lib) filterAttrs isType mapAttrs;
-
-      isFlake = isType "flake";
-      flakes = filterAttrs (_: isFlake) inputs;
-
-      toEntry = flake: { inherit flake; };
-      entries = mapAttrs (_: toEntry) flakes;
-    in
-    entries;
+  nix.registry.nixpkgs.flake = inputs.nixpkgs;
 
   # Settings
 
-  nix.gc = {
-    automatic = true;
-    dates = "04:00";
-    options = "--delete-older-than 7d";
-  };
+  nix.gc.automatic = true;
+  nix.gc.dates = "04:00";
+  nix.gc.options = "--delete-older-than 7d";
 
   nix.settings = {
     auto-allocate-uids = true;

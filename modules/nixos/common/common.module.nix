@@ -39,5 +39,7 @@ in
     };
   };
 
-  config._module.args.settings = config.settings;
+  config = {
+    _module.args.settings = config.settings;
+  };
 }

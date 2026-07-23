@@ -1,6 +1,15 @@
 let
+  deviceByPartitionLabel = label: "/dev/disk/by-partlabel/${label}";
+  deviceByLabel = label: "/dev/disk/by-label/${label}";
+
+  bootPartitionDevice = deviceByPartitionLabel "boot";
+  dataPartitionDevice = deviceByPartitionLabel "data";
+
+  dataDeviceLabel = "data";
+  dataDevice = deviceByLabel dataDeviceLabel;
+
   bootFileSystem = {
-    device = "dev/disk/by-label/boot";
+    device = bootPartitionDevice;
     fsType = "vfat";
     options = [
       "fmask=0022"
@@ -8,24 +17,49 @@ let
     ];
   };
 
-  mkDataFileSystem = subvolume: {
-    device = "/dev/disk/by-label/data";
+  mkDataFileSystem = volume: {
+    device = dataDevice;
     fsType = "btrfs";
     options = [
       "compress=zstd"
       "noatime"
-      "subvol=${subvolume}"
+      "subvol=${volume}"
     ];
   };
+
+  swapFileSystem = {
+    device = dataDevice;
+    fsType = "btrfs";
+    options = [
+      "noatime"
+      "subvol=swap"
+    ];
+  };
+
+  swapMountPath = "/swap";
 in
 {
-  boot.initrd.luks.devices."data".device = "/dev/disk/by-partlabel/data";
+  boot.initrd.luks.devices = {
+    ${dataDeviceLabel} = {
+      device = dataPartitionDevice;
+    };
+  };
 
-  fileSystems."/boot" = bootFileSystem;
+  fileSystems = {
+    "/" = mkDataFileSystem "root";
+    "/boot" = bootFileSystem;
+    "/home" = mkDataFileSystem "home";
+    "/nix" = mkDataFileSystem "nix";
+    "/var/cache" = mkDataFileSystem "cache";
+    "/var/log" = mkDataFileSystem "log";
+    ${swapMountPath} = swapFileSystem;
+  };
 
-  fileSystems."/" = mkDataFileSystem "root";
-  fileSystems."/home" = mkDataFileSystem "home";
-  fileSystems."/nix" = mkDataFileSystem "nix";
-  fileSystems."/var/cache" = mkDataFileSystem "cache";
-  fileSystems."/var/log" = mkDataFileSystem "log";
+  boot.zswap.enable = true;
+  swapDevices = [
+    {
+      device = "${swapMountPath}/swapfile";
+      size = 16 * 1024; # 16 GiB
+    }
+  ];
 }

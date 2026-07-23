@@ -1,18 +1,22 @@
 { inputs, pkgs, ... }:
 {
   imports = [
-    inputs.lanzaboote.nixosModules.lanzaboote
+    inputs.lanzaboote.nixosModules.default
   ];
 
-  boot.initrd.systemd.enable = true;
-
-  boot.lanzaboote.enable = true;
-  boot.lanzaboote.pkiBundle = "/var/lib/sbctl";
+  # Loader
 
   boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.timeout = 0;
 
-  environment.systemPackages = with pkgs; [
-    sbctl
+  # Secure Boot
+
+  boot.lanzaboote.enable = true;
+  boot.lanzaboote = {
+    pkiBundle = "/var/lib/sbctl";
+  };
+
+  environment.systemPackages = [
+    pkgs.sbctl
   ];
 }

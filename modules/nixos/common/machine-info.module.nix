@@ -1,5 +1,3 @@
-# TODO
-# https://www.freedesktop.org/software/systemd/man/latest/machine-info.html
 { config, lib, ... }:
 let
   inherit (lib) types;
@@ -71,7 +69,6 @@ let
         default = null;
         type = types.nullOr types.str;
       };
-
     };
   };
 in
@@ -103,7 +100,6 @@ in
             );
         } "=";
       };
-
     in
     {
       environment.etc.machine-info = lib.mkIf (config.environment.machineInfo != null) {

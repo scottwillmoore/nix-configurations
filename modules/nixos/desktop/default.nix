@@ -2,15 +2,14 @@
 {
   imports = [
     ./gnome.nix
+    ./user.nix
   ];
 
-  # fonts.enableDefaultPackages = false;
   fonts.packages = with pkgs; [
     # Monospace
     fira-code
     iosevka
     jetbrains-mono
-    lilex
     nerd-fonts.symbols-only
 
     # Sans-serif
@@ -21,7 +20,15 @@
   ];
 
   boot.plymouth.enable = true;
-  boot.plymouth.theme = "spinner";
 
-  services.flatpak.enable = true;
+  services.printing.enable = true;
+
+  services.udev.extraRules = ''
+    # Nuphy Air 75 V3
+    SUBSYSTEM=="hidraw", ATTRS{idVendor}=="19f5", ATTRS{idProduct}=="1028", MODE="0666"
+    # Nuphy Air 75 V3 Dongle
+    SUBSYSTEM=="hidraw", ATTRS{idVendor}=="19f5", ATTRS{idProduct}=="2620", MODE="0666"
+    # Nuphy Air 75 V3 Upgrader
+    SUBSYSTEM=="hidraw", ATTRS{idVendor}=="19f5", ATTRS{idProduct}=="0722", MODE="0666"
+  '';
 }

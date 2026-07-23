@@ -5,7 +5,9 @@
   ...
 }:
 {
-  imports = [ inputs.home-manager.nixosModules.home-manager ];
+  imports = [
+    inputs.home-manager.nixosModules.default
+  ];
 
   home-manager.backupFileExtension = "old";
   home-manager.useGlobalPkgs = true;
@@ -17,7 +19,9 @@
   };
 
   home-manager.users.${settings.userName} = {
-    imports = [ inputs.self.homeModules.scott ];
+    imports = [
+      inputs.self.homeModules.scott
+    ];
   };
 
   users.users.${settings.userName} = {

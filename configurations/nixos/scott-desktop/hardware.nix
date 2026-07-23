@@ -1,31 +1,27 @@
-{ config, inputs, ... }:
+{ config, ... }:
 {
-  imports = [
-    inputs.nixos-hardware.nixosModules.common-cpu-intel-cpu-only
-    # inputs.nixos-hardware.nixosModules.common-cpu-intel
-    # inputs.nixos-hardware.nixosModules.common-gpu-nvidia-disable
-    # inputs.nixos-hardware.nixosModules.common-gpu-intel-disable
-    inputs.nixos-hardware.nixosModules.common-hidpi
-    inputs.nixos-hardware.nixosModules.common-pc
-    inputs.nixos-hardware.nixosModules.common-pc-ssd
-  ];
+  hardware.enableRedistributableFirmware = true;
 
-  boot.initrd.availableKernelModules = [
-    "nvme"
-    "usbhid"
-    "xhci_pci"
-  ];
+  services.fwupd.enable = true;
 
-  # Nvidia
+  # CPU
+
+  hardware.cpu.intel.updateMicrocode = true;
+  # TODO: https://github.com/NixOS/nixos-hardware/blob/master/common/gpu/intel/coffee-lake/default.nix
+
+  # GPU
+
   # boot.initrd.kernelModules = [
   #   "nvidia"
   #   "nvidia_modeset"
   #   "nvidia_drm"
   # ];
-
-  # Nvidia
   hardware.nvidia.open = false;
   hardware.nvidia.package = config.boot.kernelPackages.nvidiaPackages.legacy_580;
   hardware.nvidia.powerManagement.enable = true;
   services.xserver.videoDrivers = [ "nvidia" ];
+
+  # SSD
+
+  services.fstrim.enable = true;
 }

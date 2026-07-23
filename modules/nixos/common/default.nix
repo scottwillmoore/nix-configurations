@@ -1,21 +1,24 @@
-{ pkgs, ... }:
-{
+{ pkgs, ... }: {
   imports = [
-    ./boot.nix
-    ./firmware.nix
-    ./hardware.nix
-    ./keyboard.nix
-    ./locale.nix
+    ./common.module.nix
     ./machine-info.module.nix
-    ./machine-info.nix
+
+    ./boot.nix
+    ./locale.nix
     ./network.nix
     ./nix.nix
-    ./user.nix
-
-    ./settings.nix
   ];
 
+  system.stateVersion = "25.05";
+
   environment.systemPackages = with pkgs; [
+    curl
+    file
+    zip
+    unzip
+    git
+    neovim
+
     binutils
     pciutils
     usbutils
