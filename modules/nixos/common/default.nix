@@ -12,13 +12,18 @@
   system.stateVersion = "25.05";
 
   environment.systemPackages = with pkgs; [
+    # Development
+    git
+    neovim
+
+    # Shell
     curl
     file
     zip
     unzip
-    git
-    neovim
+    zip
 
+    # System
     binutils
     pciutils
     usbutils
