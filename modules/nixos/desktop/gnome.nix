@@ -20,6 +20,8 @@
 
   services.flatpak.enable = true;
 
+  services.gnome.gcr-ssh-agent.enable = false;
+
   services.xserver.enable = true;
   services.xserver.excludePackages = [
     # These excluded packages are derived from the Nixos module for XServer:
