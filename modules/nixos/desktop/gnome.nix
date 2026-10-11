@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, settings, ... }:
 {
   environment.gnome.excludePackages = [
     # These excluded packages are derived from the NixOS module for Gnome:
@@ -28,5 +28,9 @@
     # https://github.com/NixOS/nixpkgs/blob/master/nixos/modules/services/x11/xserver.nix
 
     pkgs.xterm
+  ];
+
+  systemd.tmpfiles.rules = [
+    "C /var/lib/gdm/seat0/config/monitors.xml 0600 gdm-greeter nogroup - /home/${settings.userName}/.config/monitors.xml"
   ];
 }
