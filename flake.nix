@@ -13,6 +13,8 @@
     lanzaboote.inputs.nixpkgs.follows = "nixpkgs";
     lanzaboote.url = "github:nix-community/lanzaboote/v1.1.0";
 
+    llm-agents.url = "github:numtide/llm-agents.nix";
+
     nixpkgs.url = "github:nixos/nixpkgs/nixos-26.05";
   };
 

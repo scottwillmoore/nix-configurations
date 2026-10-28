@@ -1,4 +1,7 @@
-{ pkgs, ... }:
+{ inputs, pkgs, ... }:
+let
+  llmAgents = inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system};
+in
 {
   home.stateVersion = "24.05";
 
@@ -29,7 +32,7 @@
 
     # Tools
     devenv
-    opencode
+    llmAgents.opencode
 
     # Utilities
     curl
