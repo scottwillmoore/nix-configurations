@@ -13,6 +13,8 @@
 
   boot.lanzaboote.enable = true;
   boot.lanzaboote = {
+    configurationLimit = 5;
+
     autoGenerateKeys.enable = true;
 
     autoEnrollKeys.enable = true;

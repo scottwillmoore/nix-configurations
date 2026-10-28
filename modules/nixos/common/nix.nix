@@ -12,7 +12,7 @@
 
   nix.gc.automatic = true;
   nix.gc.dates = "04:00";
-  nix.gc.options = "--delete-older-than 7d";
+  nix.gc.options = "--delete-older-than 30d";
 
   nix.settings = {
     auto-allocate-uids = true;
@@ -31,7 +31,7 @@
     ];
   };
 
-  # Substitutors
+  # Substituters
 
   nix.settings = {
     extra-trusted-public-keys = [
