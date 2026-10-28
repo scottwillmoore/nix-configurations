@@ -35,6 +35,7 @@
     };
 
     ignore = [
+      "AGENTS.local.md"
       "._*"
       ".[Aa]pple[Dd]ouble"
       ".[Dd][Ss]_[Ss]tore"
